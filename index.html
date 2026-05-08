@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OBIT — Gestión comercial y relación con el cliente para tu negocio</title>
+  <meta name="description" content="Ventas, catálogo web, estadísticas y operación bimoneda USD/ARS. Plan Básico y OBIT + Agente con atención omnicanal en el plan avanzado." />
+  <link rel="icon" type="image/png" href="public/favicon.png" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f4f7fb;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --agent: #7c3aed;
+      --agent-soft: #f5f3ff;
+      --border: #e2e8f0;
+      --shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+      --radius: 14px;
+      --nav-h: 64px;
+      --max: 1120px;
+      /* Logo oficial (marca de agua y nav) — importedtrends/public/favicon.png */
+      --wm-logo: url("public/favicon.png");
+      /* Opacidad marcas de agua — ajustá un solo valor por zona */
+      --wm-opacity-base: 0.1;
+      --wm-opacity-hero: 0.26;
+      --wm-opacity-stats: 0.14;
+      --wm-opacity-feat: 0.085;
+      --wm-opacity-neg: 0.095;
+      --wm-opacity-planes: 0.11;
+      --wm-opacity-social: 0.1;
+      --wm-opacity-faq: 0.075;
+      --wm-opacity-cta: 0.18;
+      /* Logo navbar */
+      --logo-opacity: 0.92;
+      --logo-opacity-hover: 1;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Nav */
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0.65rem 1.25rem;
+      min-height: var(--nav-h);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "brand actions"
+        "links links";
+      align-items: center;
+      gap: 0.55rem 1rem;
+    }
+    @media (min-width: 880px) {
+      nav {
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas: "brand links actions";
+        gap: 1rem 1.5rem;
+        padding: 0 1.25rem;
+        align-items: center;
+      }
+    }
+    .logo {
+      grid-area: brand;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo img {
+      display: block;
+      height: 36px;
+      width: 36px;
+      object-fit: contain;
+      opacity: var(--logo-opacity);
+      transition: opacity 0.2s ease;
+    }
+    .logo:hover img {
+      opacity: var(--logo-opacity-hover);
+    }
+    .nav-links {
+      grid-area: links;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem 1.1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    @media (min-width: 880px) {
+      .nav-links {
+        justify-content: center;
+        gap: 1.5rem;
+        font-size: 0.95rem;
+      }
+    }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+    .nav-cta {
+      grid-area: actions;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      justify-self: end;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 1.15rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #4338ca 100%);
+      color: #fff !important;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+    .btn-primary:hover { filter: brightness(1.05); text-decoration: none; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+    .btn-lg { padding: 0.75rem 1.5rem; font-size: 1rem; }
+
+    /* Marcas de agua del logo (sutiles, distinta posición por sección) */
+    .wm-bg {
+      position: relative;
+    }
+    .wm-bg::before {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      background-repeat: no-repeat;
+      background-image: var(--wm-logo);
+      opacity: var(--wm-opacity-base);
+    }
+    .wm-bg > * {
+      position: relative;
+      z-index: 1;
+    }
+    /* Hero: marca grande abajo a la derecha (logo circular; más visible sobre oscuro) */
+    .hero.wm-bg::before {
+      width: min(280px, 52vw);
+      height: min(280px, 52vw);
+      bottom: 4%;
+      right: -4%;
+      background-position: 100% 100%;
+      background-size: contain;
+      transform: rotate(-7deg);
+      opacity: var(--wm-opacity-hero);
+      filter: brightness(1.15) contrast(1.02);
+    }
+    /* Indicadores: pequeña arriba izquierda */
+    .stats.wm-bg::before {
+      width: min(92px, 20vw);
+      height: min(92px, 20vw);
+      top: 0.65rem;
+      left: 0.5rem;
+      background-position: 0 0;
+      background-size: contain;
+      transform: rotate(-11deg);
+      opacity: var(--wm-opacity-stats);
+    }
+    /* Funcionalidades: centro-derecha */
+    .wm-feat::before {
+      width: min(220px, 48vw);
+      height: min(220px, 48vw);
+      top: 38%;
+      right: -10%;
+      background-position: 100% 50%;
+      background-size: contain;
+      transform: rotate(8deg);
+      opacity: var(--wm-opacity-feat);
+    }
+    /* Negocios: inferior izquierda */
+    .wm-neg::before {
+      width: min(170px, 40vw);
+      height: min(170px, 40vw);
+      bottom: 6%;
+      left: -6%;
+      background-position: 0 100%;
+      background-size: contain;
+      transform: rotate(-14deg);
+      opacity: var(--wm-opacity-neg);
+    }
+    /* Planes: arriba centro */
+    .wm-planes::before {
+      width: min(200px, 44vw);
+      height: min(200px, 44vw);
+      top: 0.75rem;
+      left: 50%;
+      background-position: center 0;
+      background-size: contain;
+      transform: translateX(-50%) rotate(-5deg);
+      opacity: var(--wm-opacity-planes);
+    }
+    /* Testimonios: derecha */
+    .wm-social::before {
+      width: min(140px, 32vw);
+      height: min(140px, 32vw);
+      top: 16%;
+      right: 1%;
+      background-position: 100% 0;
+      background-size: contain;
+      transform: rotate(12deg);
+      opacity: var(--wm-opacity-social);
+    }
+    /* FAQ: abajo derecha */
+    .wm-faq::before {
+      width: min(180px, 38vw);
+      height: min(180px, 38vw);
+      bottom: 4%;
+      right: 2%;
+      background-position: 100% 100%;
+      background-size: contain;
+      transform: rotate(-9deg);
+      opacity: var(--wm-opacity-faq);
+    }
+    /* CTA final: centrado, legible sobre degradado violeta */
+    .cta-band.wm-bg::before {
+      width: min(360px, 85vw);
+      height: min(360px, 85vw);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -52%) rotate(-4deg);
+      background-position: center;
+      background-size: contain;
+      opacity: var(--wm-opacity-cta);
+      filter: brightness(1.2);
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(165deg, #0f172a 0%, #1e3a8a 42%, #312e81 100%);
+      color: #fff;
+      padding: 2.5rem 1.25rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(ellipse 80% 60% at 70% 20%, rgba(99, 102, 241, 0.35), transparent 55%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 3rem; }
+    }
+    .hero-kicker {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.85rem, 4.2vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.12;
+    }
+    .hero-rotate {
+      display: block;
+      min-height: 1.2em;
+      color: #c7d2fe;
+    }
+    .hero-lead {
+      margin: 0 0 1.5rem;
+      font-size: 1.08rem;
+      opacity: 0.92;
+      max-width: 34rem;
+    }
+    .hero-bullets {
+      margin: 0 0 1.75rem;
+      padding: 0;
+      list-style: none;
+      font-size: 0.98rem;
+    }
+    .hero-bullets li {
+      margin-bottom: 0.55rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .hero-bullets li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      font-weight: 800;
+      color: #a5b4fc;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .hero-note {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      opacity: 0.78;
+    }
+
+    /* Hero: slider mockups */
+    .hero-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    /* Slider: sin caja oscura ni sombra (las variantes hero/feature/plan refinan abajo) */
+    .device-slider {
+      position: relative;
+      overflow: visible;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .device-slider-viewport {
+      overflow: hidden;
+      border-radius: 0;
+      width: 100%;
+      margin: 0 auto;
+      aspect-ratio: 9 / 17;
+      max-height: min(460px, 65vh);
+    }
+    /* Hero: capturas más grandes, centradas, sin marco */
+    .hero-showcase {
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-showcase .device-slider {
+      width: 100%;
+      max-width: min(460px, 94vw);
+      margin: 0 auto;
+    }
+    .hero-showcase .device-slider-viewport {
+      aspect-ratio: 9 / 18;
+      max-height: min(720px, 86vh);
+      max-width: min(460px, 94vw);
+    }
+    .device-slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+      will-change: transform;
+    }
+    .device-slider-slide {
+      flex: 0 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+    }
+    .device-slider-slide img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      display: block;
+      margin: 0 auto;
+    }
+    .device-slider-cap {
+      margin: 0;
+      padding: 0.65rem 0.5rem 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      background: transparent;
+      border: none;
+    }
+    .device-slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 0.35rem 0 0;
+      background: transparent;
+    }
+    /* Flechas desactivadas: solo puntos (botones prev/next retirados del HTML) */
+    .device-slider-controls [data-prev],
+    .device-slider-controls [data-next] {
+      display: none !important;
+    }
+    .device-slider-dots {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .device-slider-dots button {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+    }
+    .device-slider-dots button[aria-current="true"] {
+      background: #fff;
+      transform: scale(1.15);
+    }
+
+    /* Filmstrip bajo stats */
+    .showcase-strip {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0 1.25rem;
+    }
+    .showcase-strip-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .showcase-strip-label {
+      margin: 0 0 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .showcase-strip-scroll {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.35rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .showcase-strip-scroll figure {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      margin: 0;
+      width: min(140px, 38vw);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-soft);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
+    .showcase-strip-scroll img {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
+    }
+    .showcase-strip-scroll figcaption {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.35rem 0.4rem 0.45rem;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.25;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.35rem;
+      backdrop-filter: blur(8px);
+    }
+    .hero-card h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .hero-card ul {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.92rem;
+      opacity: 0.95;
+    }
+    .hero-card li { margin-bottom: 0.4rem; }
+
+    /* Stats strip */
+    .stats {
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.25rem;
+    }
+    .stats-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      text-align: center;
+    }
+    @media (min-width: 700px) {
+      .stats-inner { grid-template-columns: repeat(4, 1fr); }
+    }
+    .stats-inner > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .stat-num {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      min-height: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stat-num-curr {
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .stat-label {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+      line-height: 1.25;
+      max-width: 14rem;
+    }
+
+    /* Sections */
+    .section {
+      padding: 3.5rem 1.25rem;
+    }
+    .section.alt { background: var(--bg-soft); }
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+    }
+    .section-head h2 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .feature-plan-badge {
+      display: inline-block;
+      margin-bottom: 0.4rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--agent);
+      background: var(--agent-soft);
+      padding: 0.28rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    /* Feature rows */
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .feature-row {
+      display: grid;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    @media (min-width: 800px) {
+      .feature-row { grid-template-columns: 1fr 1fr; padding: 2rem 2.25rem; }
+      .feature-row.reverse .feature-copy { order: 2; }
+      .feature-row.reverse .feature-visual { order: 1; }
+    }
+    .feature-copy h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .feature-copy .sub {
+      margin: 0 0 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.92rem;
+    }
+    .feature-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .feature-visual {
+      min-height: 120px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--accent-soft) 0%, #e0e7ff 100%);
+      border: 1px solid #bfdbfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0;
+      overflow: hidden;
+    }
+    .feature-visual:has(.feature-slider-wrap) {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    .feature-visual.agent {
+      background: linear-gradient(145deg, var(--agent-soft) 0%, #ede9fe 100%);
+      border-color: #c4b5fd;
+    }
+    .feature-visual.agent:has(.feature-slider-wrap) {
+      background: transparent;
+      border: none;
+    }
+    .feature-visual img {
+      width: 100%;
+      height: auto;
+      display: block;
+      vertical-align: middle;
+    }
+    .feature-visual .feature-slider-wrap {
+      width: 100%;
+      padding: 0;
+      background: transparent;
+      border: none;
+    }
+    .feature-slider-wrap .device-slider-viewport {
+      aspect-ratio: 9 / 17;
+      max-height: min(520px, 68vh);
+      max-width: min(380px, 100%);
+    }
+    .feature-slider-wrap .device-slider-controls {
+      background: transparent;
+      border: none;
+      padding-top: 0.35rem;
+    }
+    .feature-slider-wrap .device-slider-controls [data-prev],
+    .feature-slider-wrap .device-slider-controls [data-next] {
+      display: none !important;
+    }
+    .feature-slider-wrap .device-slider-cap {
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      font-size: 0.8rem;
+      padding: 0.6rem 0.25rem 0.25rem;
+    }
+    .feature-slider-wrap .device-slider-dots button {
+      background: #cbd5e1;
+    }
+    .feature-slider-wrap .device-slider-dots button[aria-current="true"] {
+      background: var(--accent);
+    }
+
+    /* Funcionalidades · layout compacto */
+    #funcionalidades {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+    #funcionalidades .section-head {
+      margin-bottom: 1.5rem;
+    }
+    .features--compact {
+      gap: 0.85rem;
+    }
+    .features--compact .feature-row {
+      padding: 1rem 1.15rem;
+      gap: 1rem;
+      box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+    }
+    @media (min-width: 800px) {
+      .features--compact .feature-row {
+        grid-template-columns: minmax(148px, 30%) 1fr;
+        padding: 1.1rem 1.35rem;
+        gap: 1.25rem;
+        align-items: center;
+      }
+    }
+    .features--compact .feature-copy .sub {
+      margin-bottom: 0.35rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.01em;
+    }
+    .features--compact .feature-copy h3 {
+      font-size: 1.08rem;
+      margin-bottom: 0.35rem;
+      line-height: 1.25;
+    }
+    .features--compact .feature-copy p {
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .features--compact .feature-plan-badge {
+      margin-bottom: 0.3rem;
+      font-size: 0.64rem;
+      padding: 0.22rem 0.5rem;
+    }
+    .features--compact .feature-visual {
+      min-height: 0;
+      padding: 0.25rem;
+    }
+    .features--compact .feature-visual img {
+      max-height: min(240px, 46vw);
+      width: auto;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      object-fit: contain;
+    }
+    .features--compact .feature-slider-wrap .device-slider-viewport {
+      max-height: min(240px, 46vw);
+      max-width: min(200px, 100%);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .features--compact .feature-slider-wrap .device-slider-cap {
+      font-size: 0.72rem;
+      padding: 0.4rem 0.2rem 0.15rem;
+    }
+
+    /* Negocios: imán menú completo */
+    .module-magnet {
+      margin-bottom: 2.25rem;
+      padding: 1.5rem;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .module-magnet p {
+      margin: 0 0 1rem;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      max-width: 36rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .module-magnet h3 {
+      margin: 0 0 0.75rem;
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .module-magnet img {
+      width: min(100%, 380px);
+      height: auto;
+      margin: 0 auto;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Planes: vista previa */
+    .plan-preview {
+      margin: 0 0 1.25rem;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-soft);
+    }
+    .plan-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+      vertical-align: middle;
+    }
+    .plan-preview-caption {
+      margin: 0;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .plan-preview .device-slider {
+      border-radius: 0;
+      background: transparent;
+    }
+    .plan-card.featured .plan-preview {
+      border: none;
+      background: transparent;
+    }
+    .plan-slider-embed .device-slider-viewport {
+      max-height: min(260px, 42vh);
+      aspect-ratio: 9 / 15;
+      max-width: min(280px, 100%);
+      margin: 0 auto;
+    }
+    .plan-preview .device-slider-cap {
+      font-size: 0.65rem;
+      padding: 0.45rem 0.35rem 0.2rem;
+      color: var(--muted);
+      background: transparent;
+    }
+    .plan-preview .device-slider-controls {
+      padding: 0.25rem 0 0;
+      background: transparent;
+    }
+    .plan-preview .device-slider-controls [data-prev],
+    .plan-preview .device-slider-controls [data-next] {
+      display: none !important;
+    }
+    .plan-preview .device-slider-dots button {
+      background: #cbd5e1;
+    }
+    .plan-preview .device-slider-dots button[aria-current="true"] {
+      background: var(--agent);
+    }
+    .cats {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 600px) {
+      .cats { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 960px) {
+      .cats { grid-template-columns: repeat(4, 1fr); }
+    }
+    .cat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.2rem;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    }
+    .cat-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+    .cat-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .cat-tags {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+    @media (min-width: 860px) {
+      .pricing-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .plan-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .plan-card.featured {
+      border-color: var(--agent);
+      box-shadow: 0 12px 48px rgba(124, 58, 237, 0.12);
+    }
+    .plan-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 3;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--agent);
+      color: #fff;
+      padding: 0.4rem 0.85rem;
+      border-bottom-left-radius: var(--radius);
+    }
+    .plan-name {
+      margin: 0 0 0.35rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .plan-card.basic .plan-name { color: var(--accent); }
+    .plan-card.featured .plan-name { color: var(--agent); }
+    .plan-tagline {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+    .plan-price {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-price .amount {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .plan-price .period {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .plan-price .hint {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .plan-list {
+      margin: 0 0 1.5rem;
+      padding-left: 1.15rem;
+      flex: 1;
+      font-size: 0.95rem;
+    }
+    .plan-list li { margin-bottom: 0.5rem; }
+    .plan-list .no { color: #94a3b8; text-decoration: line-through; }
+
+    /* Testimonials */
+    .quotes {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .quotes { grid-template-columns: repeat(3, 1fr); }
+    }
+    blockquote {
+      margin: 0;
+      padding: 1.35rem 1.25rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    blockquote strong { color: var(--text); display: block; margin-top: 0.75rem; font-size: 0.88rem; }
+
+    /* FAQ */
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 0.65rem;
+      background: var(--bg);
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    details[open] summary { margin-bottom: 0.5rem; }
+    details p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* CTA band */
+    .cta-band {
+      background: linear-gradient(135deg, #1e40af 0%, #5b21b6 100%);
+      color: #fff;
+      padding: 3rem 1.25rem;
+      text-align: center;
+    }
+    .cta-band h2 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.45rem, 3vw, 1.85rem);
+      font-weight: 800;
+    }
+    .cta-band p {
+      margin: 0 auto 1.25rem;
+      max-width: 520px;
+      opacity: 0.92;
+    }
+    .cta-band .btn-primary {
+      background: #fff;
+      color: #312e81 !important;
+      box-shadow: none;
+    }
+
+    footer {
+      padding: 2.5rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer strong { color: var(--text); }
+    .foot-links {
+      margin: 0.75rem 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .foot-links a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrap">
+    <nav aria-label="Principal">
+      <a class="logo" href="#inicio" aria-label="OBIT — Inicio"><img src="public/favicon.png" alt="" width="36" height="36" decoding="async" /></a>
+      <div class="nav-links">
+        <a href="#funcionalidades">Funcionalidades</a>
+        <a href="#negocios">Tipos de negocio</a>
+        <a href="#planes">Planes</a>
+        <a href="#faq">Preguntas frecuentes</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="#contacto">Contáctanos</a>
+        <a class="btn btn-primary" href="#demo">Probar OBIT</a>
+      </div>
+    </nav>
+  </div>
+
+  <header class="hero wm-bg" id="inicio">
+    <div class="hero-inner">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-kicker">Software de gestión comercial</span>
+          <h1>
+            Sistema de
+            <span class="hero-rotate" id="hero-rotate">Ventas y catálogo web</span>
+            para tu negocio
+          </h1>
+          <p class="hero-lead">
+            Digitaliza tu operación <strong>de cero a orden total</strong>. Centralizá <strong>ventas, catálogo web y estadísticas</strong> con <strong>operación bimoneda (USD y ARS)</strong> en la misma herramienta; si necesitás <strong>conversaciones, seguimientos y campañas</strong> unificados, escalá a <strong>OBIT + Agente</strong>.
+          </p>
+          <ul class="hero-bullets">
+            <li>Usalo desde la web, con tu equipo alineado al mismo flujo.</li>
+            <li><strong>Bimoneda USD / ARS</strong> en ventas, documentos y listados (ambos planes).</li>
+            <li>La <strong>atención omnicanal</strong> (conversaciones, seguimientos y campañas) va en <strong>OBIT + Agente</strong>.</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" id="demo" href="#planes">Ver planes y precios</a>
+            <a class="btn btn-ghost btn-lg" href="#contacto" style="background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.35);">Hablar con ventas</a>
+          </div>
+          <p class="hero-note">Menos planillas sueltas. Más ventas con datos y catálogo ordenados.</p>
+        </div>
+        <div class="hero-showcase">
+          <div class="device-slider" data-slider data-autoplay="6200" aria-roledescription="carrusel" aria-label="Capturas del producto OBIT">
+            <div class="device-slider-viewport">
+              <div class="device-slider-track" data-slider-track>
+                <div class="device-slider-slide" data-slide data-caption="Marca y experiencia en celular">
+                  <img src="app/images/material-marketing/1.png" alt="OBIT en el móvil: pantalla de marca" width="600" height="1200" decoding="async" loading="eager" />
+                </div>
+                <div class="device-slider-slide" data-slide data-caption="Acceso con Tu Ecom CRM · OBIT Software">
+                  <img src="app/images/material-marketing/2.png" alt="Acceso seguro a Tu Ecom CRM" width="600" height="1200" decoding="async" loading="lazy" />
+                </div>
+                <div class="device-slider-slide" data-slide data-caption="Catálogo web público con precios por volumen">
+                  <img src="app/images/material-marketing/13.png" alt="Catálogo web público de productos" width="600" height="1200" decoding="async" loading="lazy" />
+                </div>
+                <div class="device-slider-slide" data-slide data-caption="Ventas, facturación y KPIs en vivo">
+                  <img src="app/images/material-marketing/12.png" alt="Módulo Ventas con KPIs y listado" width="600" height="1200" decoding="async" loading="lazy" />
+                </div>
+              </div>
+            </div>
+            <p class="device-slider-cap" data-slider-caption>Marca y experiencia en celular</p>
+            <div class="device-slider-controls">
+              <div class="device-slider-dots" data-slider-dots aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="stats wm-bg" aria-label="Indicadores">
+    <div class="stats-inner">
+      <div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">ventas, catálogo y métricas integradas</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">planes: Básico y OBIT + Agente</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">catálogo + estadísticas en ambos planes</div>
+      </div>
+      <div>
+        <div class="stat-num stat-num-curr">USD · ARS</div>
+        <div class="stat-label">bimoneda en ventas y reportes</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase-strip" aria-label="Vistas rápidas por módulo">
+    <div class="showcase-strip-inner">
+      <p class="showcase-strip-label">El producto, módulo por módulo</p>
+      <div class="showcase-strip-scroll">
+        <figure><img src="app/images/material-marketing/12.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Ventas</figcaption></figure>
+        <figure><img src="app/images/material-marketing/3.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Productos</figcaption></figure>
+        <figure><img src="app/images/material-marketing/13.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Catálogo web</figcaption></figure>
+        <figure><img src="app/images/material-marketing/10.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Estadísticas</figcaption></figure>
+        <figure><img src="app/images/material-marketing/6.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Sitio · métricas</figcaption></figure>
+        <figure><img src="app/images/material-marketing/11.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Conversaciones</figcaption></figure>
+        <figure><img src="app/images/material-marketing/7.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Seguimientos</figcaption></figure>
+        <figure><img src="app/images/material-marketing/9.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Tesorería</figcaption></figure>
+        <figure><img src="app/images/material-marketing/5.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Ganancias</figcaption></figure>
+        <figure><img src="app/images/material-marketing/8.png" alt="" width="200" height="400" decoding="async" loading="lazy" /><figcaption>Campañas</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt wm-bg wm-feat" id="funcionalidades">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>¿Qué puedes hacer con OBIT?</h2>
+        <p>
+          Desde el plan <strong>Básico</strong> tenés <strong>operación bimoneda (USD y ARS)</strong>, <strong>catálogo web público</strong> y <strong>estadísticas</strong> para decidir con datos. Si necesitás <strong>bandeja de conversaciones, seguimientos y campañas</strong> en el mismo flujo, el camino es <strong>OBIT + Agente</strong>.
+        </p>
+      </div>
+      <div class="features features--compact">
+        <article class="feature-row reverse">
+          <div class="feature-copy">
+            <p class="sub">Del pedido al cobro</p>
+            <h3>Vendé y formalizá sin volver a cargar todo de cero</h3>
+            <p>
+              Presupuestos (reservas), ventas y facturación conectados al mismo cliente y catálogo, con convivencia de <strong>USD y ARS</strong> en documentos y totales que tu equipo usa día a día. Menos reproceso, menos errores entre “lo que se dijo” y “lo que se cobró”. Incluido en <strong>Básico</strong> y <strong>OBIT + Agente</strong>.
+            </p>
+          </div>
+          <div class="feature-visual">
+            <img src="app/images/material-marketing/12.png" alt="Panel de ventas con totales facturados y listado por cliente" width="600" height="1200" decoding="async" loading="lazy" />
+          </div>
+        </article>
+        <article class="feature-row">
+          <div class="feature-copy">
+            <p class="sub">Tu catálogo y operación base</p>
+            <h3>Productos alineados a cómo vendés</h3>
+            <p>
+              Mantené productos y precios coherentes con tus ventas y documentos comerciales. En <strong>OBIT + Agente</strong> sumás <strong>logística, compras, envíos y pricing avanzado</strong> cuando tu operación lo demande.
+            </p>
+          </div>
+          <div class="feature-visual">
+            <img src="app/images/material-marketing/3.png" alt="Gestión de productos con alertas de stock y acciones masivas" width="600" height="1200" decoding="async" loading="lazy" />
+          </div>
+        </article>
+        <article class="feature-row reverse" id="catalogo-web">
+          <div class="feature-copy">
+            <p class="sub">Catálogo público · ambos planes</p>
+            <h3>Tu vitrina web con precios claros</h3>
+            <p>
+              Mostrá productos en un <strong>catálogo online</strong> pensado para venta B2B/B2C: búsqueda, filtros y precios escalonados por volumen, con precios visibles en <strong>USD y/o ARS</strong> según cómo cotizás. Es el frente público de tu negocio — incluido en <strong>Básico</strong> y en <strong>OBIT + Agente</strong>.
+            </p>
+          </div>
+          <div class="feature-visual">
+            <img src="app/images/material-marketing/13.png" alt="Catálogo web público con grillas de precios por cantidad" width="600" height="1200" decoding="async" loading="lazy" />
+          </div>
+        </article>
+        <article class="feature-row" id="estadisticas">
+          <div class="feature-copy">
+            <p class="sub">Analítica · ambos planes</p>
+            <h3>Estadísticas para decidir sin adivinar</h3>
+            <p>
+              Visualizá ventas, clientes y productos más vendidos desde el panel de <strong>estadísticas</strong>. Los mismos datos operativos que cargás día a día se convierten en respuestas — disponible en <strong>Básico</strong> y <strong>OBIT + Agente</strong>.
+            </p>
+          </div>
+          <div class="feature-visual">
+            <img src="app/images/material-marketing/10.png" alt="Panel de estadísticas con KPIs y ranking de productos" width="600" height="1200" decoding="async" loading="lazy" />
+          </div>
+        </article>
+        <article class="feature-row reverse" id="atencion-agente">
+          <div class="feature-copy">
+            <span class="feature-plan-badge">Solo OBIT + Agente</span>
+            <p class="sub">Atención omnicanal</p>
+            <h3>Conversaciones y seguimientos en la misma mesa de trabajo</h3>
+            <p>
+              Centralizá <strong>contactos, conversaciones y seguimientos</strong> para que nada quede en chats sueltos: prioridades claras, historial por cliente y equipo alineado. Este bloque <strong>no está en el plan Básico</strong>; forma parte de <strong>OBIT + Agente</strong>.
+            </p>
+          </div>
+          <div class="feature-visual agent">
+            <div class="feature-slider-wrap device-slider" data-slider data-autoplay="8000" aria-label="Atención al cliente y seguimiento">
+              <div class="device-slider-viewport">
+                <div class="device-slider-track" data-slider-track>
+                  <div class="device-slider-slide" data-slide data-caption="Conversaciones con estado y búsqueda">
+                    <img src="app/images/material-marketing/11.png" alt="Lista de conversaciones en OBIT" width="600" height="1200" decoding="async" loading="lazy" />
+                  </div>
+                  <div class="device-slider-slide" data-slide data-caption="Seguimientos con historial completo">
+                    <img src="app/images/material-marketing/7.png" alt="Seguimientos programados" width="600" height="1200" decoding="async" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <p class="device-slider-cap" data-slider-caption>Conversaciones y seguimientos</p>
+              <div class="device-slider-controls">
+                <div class="device-slider-dots" data-slider-dots></div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="feature-row">
+          <div class="feature-copy">
+            <span class="feature-plan-badge">Solo OBIT + Agente</span>
+            <p class="sub">Marketing y sitio avanzado</p>
+            <h3>Campañas y métricas del canal digital</h3>
+            <p>
+              Lanzá <strong>campañas</strong> con seguimiento de contactos y resultados, y profundizá en las <strong>métricas del sitio</strong> (visitas, WhatsApp, conversión). Complementa tu catálogo y estadísticas base con herramientas de crecimiento en el plan <strong>OBIT + Agente</strong>.
+            </p>
+          </div>
+          <div class="feature-visual agent">
+            <div class="feature-slider-wrap device-slider" data-slider data-autoplay="9000" aria-label="Campañas y analítica web">
+              <div class="device-slider-viewport">
+                <div class="device-slider-track" data-slider-track>
+                  <div class="device-slider-slide" data-slide data-caption="Campañas y origen de leads">
+                    <img src="app/images/material-marketing/8.png" alt="Dashboard de campañas de publicidad" width="600" height="1200" decoding="async" loading="lazy" />
+                  </div>
+                  <div class="device-slider-slide" data-slide data-caption="Métricas del sitio y catálogo">
+                    <img src="app/images/material-marketing/6.png" alt="Métricas del sitio web y catálogo" width="600" height="1200" decoding="async" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <p class="device-slider-cap" data-slider-caption>Campañas y analítica web</p>
+              <div class="device-slider-controls">
+                <div class="device-slider-dots" data-slider-dots></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wm-bg wm-neg" id="negocios">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>No importa el tipo de negocio que tengas</h2>
+        <p>En OBIT te acompañamos si vendés productos, servicios o distribución: <strong>catálogo, números y ventas</strong> en el Básico; <strong>atención, campañas y operación extendida</strong> cuando pasás a OBIT + Agente.</p>
+      </div>
+
+      <div class="module-magnet">
+        <h3>Todo el sistema, en un solo menú</h3>
+        <p>Clientes, ventas, productos, <strong>catálogo web</strong>, <strong>estadísticas</strong> y ajustes en todos los planes; el menú completo puede incluir atención, finanzas ampliadas y logística según tu contratación.</p>
+        <img src="app/images/material-marketing/4.png" alt="Menú lateral de OBIT con módulos: atención, clientes, finanzas, almacén y más" width="800" height="1600" decoding="async" loading="lazy" />
+      </div>
+
+      <div class="cats">
+        <article class="cat-card">
+          <h3>Comercio y retail</h3>
+          <p>Consultas por stock, precios y entregas, con venta y facturación ordenadas.</p>
+          <div class="cat-tags"><span class="tag">Tiendas</span><span class="tag">Mayoristas</span></div>
+        </article>
+        <article class="cat-card">
+          <h3>Servicios</h3>
+          <p>Turnos, propuestas y seguimiento de oportunidades sin depender de notas sueltas.</p>
+          <div class="cat-tags"><span class="tag">Profesionales</span><span class="tag">Belleza</span></div>
+        </article>
+        <article class="cat-card">
+          <h3>Producción y distribución</h3>
+          <p>Más control cuando sumás compras, depósitos y envíos con el plan extendido.</p>
+          <div class="cat-tags"><span class="tag">Logística</span><span class="tag">Stock</span></div>
+        </article>
+        <article class="cat-card">
+          <h3>Equipos en crecimiento</h3>
+          <p>Roles, permisos y auditoría para escalar sin perder trazabilidad (plan Agente).</p>
+          <div class="cat-tags"><span class="tag">Equipos</span><span class="tag">SLA</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt wm-bg wm-planes" id="planes">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>Planes y precios</h2>
+        <p>Elegí arrancar con <strong>ventas, bimoneda USD/ARS, catálogo público y estadísticas</strong>, o sumá <strong>atención omnicanal, campañas, finanzas extendidas y agente</strong> cuando quieras escalar.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="plan-card basic">
+          <div class="plan-preview">
+            <img src="app/images/material-marketing/13.png" alt="Vista del plan Básico: catálogo web público" width="600" height="400" decoding="async" loading="lazy" />
+            <p class="plan-preview-caption">Catálogo web + estadísticas incluidos</p>
+          </div>
+          <h3 class="plan-name">Básico</h3>
+          <p class="plan-tagline">Ventas, productos, <strong>catálogo público</strong> y <strong>estadísticas</strong> para operar con números claros — sin módulo de atención omnicanal.</p>
+          <div class="plan-price">
+            <span class="amount">Desde USD 99</span>
+            <span class="period"> / mes</span>
+            <span class="hint">Tramo orientativo según usuarios y volumen; cotización final según tu caso.</span>
+          </div>
+          <ul class="plan-list">
+            <li>Dashboard y <strong>clientes</strong></li>
+            <li><strong>Ventas, facturación, presupuestos (reservas)</strong> y promociones</li>
+            <li><strong>Productos</strong></li>
+            <li><strong>Catálogo web público</strong> (vitrina online de tu oferta)</li>
+            <li><strong>Estadísticas</strong> de ventas y desempeño</li>
+            <li><strong>Bimoneda USD / ARS</strong> en ventas, documentos y listados</li>
+            <li><strong>Ajustes:</strong> usuarios, roles y apariencia</li>
+            <li class="no"><strong>Atención omnicanal:</strong> contactos, conversaciones y seguimientos</li>
+            <li class="no"><strong>Campañas</strong> conectadas al flujo de ventas</li>
+            <li class="no"><strong>Finanzas ampliadas:</strong> tesorería, gastos, ganancias</li>
+            <li class="no"><strong>Almacén y logística:</strong> compras, depósitos, consignaciones, envíos</li>
+            <li class="no"><strong>Pricing por cantidad</strong> y matrix de precios</li>
+            <li class="no"><strong>Sitio web</strong> con métricas y herramientas avanzadas (según implementación)</li>
+            <li class="no"><strong>Configuración del asistente (agente)</strong> y <strong>auditoría</strong></li>
+          </ul>
+          <a class="btn btn-primary" href="#contacto">Elegir Básico</a>
+        </article>
+
+        <article class="plan-card featured">
+          <span class="plan-badge">Incluye agente</span>
+          <div class="plan-preview">
+            <div class="device-slider plan-slider-embed" data-slider data-autoplay="7500" aria-label="Vistas del plan OBIT más Agente">
+              <div class="device-slider-viewport">
+                <div class="device-slider-track" data-slider-track>
+                  <div class="device-slider-slide" data-slide data-caption="Atención: conversaciones">
+                    <img src="app/images/material-marketing/11.png" alt="Conversaciones" width="600" height="900" decoding="async" loading="lazy" />
+                  </div>
+                  <div class="device-slider-slide" data-slide data-caption="Ganancias y resultado del periodo">
+                    <img src="app/images/material-marketing/5.png" alt="Resumen de ganancias" width="600" height="900" decoding="async" loading="lazy" />
+                  </div>
+                  <div class="device-slider-slide" data-slide data-caption="Tesorería multimoneda">
+                    <img src="app/images/material-marketing/9.png" alt="Tesorería con totales y cajas" width="600" height="900" decoding="async" loading="lazy" />
+                  </div>
+                  <div class="device-slider-slide" data-slide data-caption="Campañas con métricas">
+                    <img src="app/images/material-marketing/8.png" alt="Campañas de publicidad" width="600" height="900" decoding="async" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <p class="device-slider-cap" data-slider-caption>Atención, finanzas y campañas</p>
+              <div class="device-slider-controls">
+                <div class="device-slider-dots" data-slider-dots></div>
+              </div>
+            </div>
+          </div>
+          <h3 class="plan-name">OBIT + Agente</h3>
+          <p class="plan-tagline">Todo lo del Básico más marketing, analítica, operación completa y asistente según implementación. Para negocios que quieren medir, automatizar primera línea donde aplique y crecer con control.</p>
+          <div class="plan-price">
+            <span class="amount">Desde USD 219</span>
+            <span class="period"> / mes</span>
+            <span class="hint">Tramo orientativo; el agente puede incluir setup y costos asociados — lo explicitamos en propuesta.</span>
+          </div>
+          <ul class="plan-list">
+            <li>Todo lo del plan <strong>Básico</strong> (bimoneda USD/ARS, catálogo público + estadísticas incluidas)</li>
+            <li><strong>Atención omnicanal:</strong> contactos, conversaciones y seguimientos</li>
+            <li><strong>Campañas</strong> conectadas al flujo de ventas</li>
+            <li><strong>Finanzas ampliadas:</strong> tesorería, gastos, ganancias</li>
+            <li><strong>Almacén y logística:</strong> compras, depósitos, consignaciones, envíos</li>
+            <li><strong>Pricing por cantidad</strong> y matrix de precios</li>
+            <li><strong>Sitio web</strong> con métricas y herramientas avanzadas (según implementación)</li>
+            <li><strong>Configuración del asistente (agente)</strong> y <strong>auditoría</strong></li>
+          </ul>
+          <a class="btn btn-primary" href="#contacto" style="background:linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%);box-shadow:0 4px 14px rgba(124,58,237,0.35);">Elegir OBIT + Agente</a>
+        </article>
+      </div>
+      <p style="text-align:center;color:var(--muted);margin-top:2rem;font-size:0.95rem;max-width:640px;margin-left:auto;margin-right:auto;">
+        ¿Necesitás integraciones, volumen alto o condiciones contractuales especiales? Ofrecemos <strong>planes a medida</strong> sobre la misma base de producto — consultanos.
+      </p>
+    </div>
+  </section>
+
+  <section class="section wm-bg wm-social" id="testimonios">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>Casos de éxito</h2>
+        <p>Historias tipo las que inspiran las mejores landing de gestión: menos caos, más cierre. <strong>Reemplazá estos textos</strong> por testimonios reales de tus clientes cuando los tengas.</p>
+      </div>
+      <div class="quotes">
+        <blockquote>
+          “Pasamos de pelear con WhatsApp y Excel a tener cada conversación con dueño y próximo paso. <strong>Cerramos más sin sumar gente.</strong>”
+          <strong>— Laura Méndez · Distribuidora del Norte</strong>
+        </blockquote>
+        <blockquote>
+          “Antes perdíamos pedidos por demoras. Hoy el equipo ve el estado de cada cliente y la facturación sale del mismo lugar.”
+          <strong>— Andrés Páez · Ferretería Central</strong>
+        </blockquote>
+        <blockquote>
+          “Con campañas y estadísticas entendimos qué promoción traía consultas que realmente compraban.”
+          <strong>— Valentina Ríos · Servicios B2B</strong>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt wm-bg wm-faq" id="faq">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>Preguntas frecuentes</h2>
+        <p>Resolvemos las dudas más comunes sobre OBIT.</p>
+      </div>
+      <details>
+        <summary>¿Qué es OBIT y cómo funciona?</summary>
+        <p>OBIT es un sistema de <strong>gestión comercial</strong>: ventas en <strong>USD y ARS</strong>, clientes, <strong>catálogo web</strong> y <strong>estadísticas</strong> en un solo lugar; la <strong>atención omnicanal</strong> y el resto de módulos avanzados entran con <strong>OBIT + Agente</strong>.</p>
+      </details>
+      <details>
+        <summary>¿En qué se diferencia el plan Básico de OBIT + Agente?</summary>
+        <p>El <strong>Básico</strong> incluye ventas, clientes, productos, operación <strong>bimoneda USD/ARS</strong>, <strong>catálogo web público</strong> y <strong>estadísticas</strong>, sin el módulo de atención omnicanal. <strong>OBIT + Agente</strong> suma conversaciones y seguimientos, campañas, finanzas y logística ampliadas, matrix de precios, sitio web con analítica extendida, agente y auditoría.</p>
+      </details>
+      <details>
+        <summary>¿OBIT reemplaza un CRM tradicional?</summary>
+        <p>OBIT está pensado para el <strong>día a día real</strong>: mensajes, pendientes y cierre comercial. Si “tenían CRM y no lo usaban”, la diferencia es que acá el trabajo vivo — conversaciones y próximos pasos — está en el centro, no solo los datos estáticos.</p>
+      </details>
+      <details>
+        <summary>¿Necesito conexión a internet?</summary>
+        <p>Sí: OBIT opera en la nube para que tu equipo vea la misma información actualizada en tiempo real desde cualquier lugar.</p>
+      </details>
+      <details>
+        <summary>¿Puedo operar en dólares y pesos a la vez?</summary>
+        <p>Sí: OBIT contempla <strong>bimoneda USD / ARS</strong> en el flujo comercial base (ventas, documentos y reportes) en <strong>ambos planes</strong>. Las pantallas de <strong>tesorería</strong> y caja multimoneda integran esa lógica en <strong>OBIT + Agente</strong> cuando tu implementación lo incluye.</p>
+      </details>
+      <details>
+        <summary>¿El agente es un chatbot que reemplaza a mi equipo?</summary>
+        <p>No: el agente complementa con <strong>respuestas y flujos donde aplica</strong>, liberando primera línea repetitiva; lo sensible sigue con tu gente, con contexto unificado.</p>
+      </details>
+      <details>
+        <summary>¿Cómo empiezo?</summary>
+        <p>Escribinos por el canal comercial, pedí una demo de 15 minutos y te mostramos <strong>cómo quedaría tu flujo</strong> en OBIT con el plan que mejor encaje.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="cta-band wm-bg" id="contacto">
+    <h2>Unite al orden comercial que hace crecer tu negocio</h2>
+    <p>Digitalizá ventas en <strong>USD y ARS</strong>, catálogo y estadísticas con la misma claridad que esperás de una gran plataforma — y sumá atención omnicanal cuando elijas OBIT + Agente.</p>
+    <a class="btn btn-primary btn-lg" href="mailto:ventas@example.com?subject=Demo%20OBIT">Solicitar demo</a>
+    <p style="margin-top:1rem;font-size:0.85rem;opacity:0.85;">Configurá el enlace <strong>mailto</strong> con el correo comercial real o enlazá tu formulario.</p>
+  </section>
+
+  <footer>
+    <p><strong>OBIT Software</strong> · Plataforma de gestión comercial y relación con el cliente.</p>
+    <div class="foot-links">
+      <a href="#planes">Planes</a>
+      <a href="#faq">Ayuda</a>
+      <span>Términos y privacidad (pendiente)</span>
+    </div>
+    <p style="margin-top:1rem;">© <span id="y"></span> OBIT. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    (function () {
+      var phrases = [
+        "Ventas y catálogo web",
+        "USD y ARS en la misma operación",
+        "Estadísticas claras",
+        "Operación comercial",
+        "Gestión de tu negocio"
+      ];
+      var rotateEl = document.getElementById("hero-rotate");
+      if (rotateEl) {
+        var ri = 0;
+        setInterval(function () {
+          ri = (ri + 1) % phrases.length;
+          rotateEl.textContent = phrases[ri];
+        }, 2600);
+      }
+      var yEl = document.getElementById("y");
+      if (yEl) yEl.textContent = new Date().getFullYear();
+
+      function initSlider(root) {
+        var viewport = root.querySelector(".device-slider-viewport");
+        var track = root.querySelector("[data-slider-track]");
+        var slides = root.querySelectorAll("[data-slide]");
+        var captionEl = root.querySelector("[data-slider-caption]");
+        var dotsWrap = root.querySelector("[data-slider-dots]");
+        var prevBtn = root.querySelector("[data-prev]");
+        var nextBtn = root.querySelector("[data-next]");
+        var autoplayMs = parseInt(root.getAttribute("data-autoplay") || "0", 10);
+        var idx = 0;
+        var timer;
+
+        if (!viewport || !track || slides.length === 0) return;
+
+        function captionAt(i) {
+          var s = slides[i];
+          return s && s.getAttribute("data-caption") ? s.getAttribute("data-caption") : "";
+        }
+
+        function layout() {
+          var w = viewport.getBoundingClientRect().width;
+          for (var s = 0; s < slides.length; s++)
+            slides[s].style.width = w + "px";
+          track.style.transform = "translateX(-" + (idx * w) + "px)";
+        }
+
+        function setDots() {
+          if (!dotsWrap) return;
+          var dots = dotsWrap.querySelectorAll("button");
+          for (var d = 0; d < dots.length; d++)
+            dots[d].setAttribute("aria-current", d === idx ? "true" : "false");
+        }
+
+        function go(n) {
+          idx = (n + slides.length) % slides.length;
+          var w = viewport.getBoundingClientRect().width;
+          track.style.transform = "translateX(-" + (idx * w) + "px)";
+          if (captionEl) captionEl.textContent = captionAt(idx) || captionEl.textContent;
+          setDots();
+        }
+
+        function buildDots() {
+          if (!dotsWrap || slides.length <= 1) return;
+          dotsWrap.innerHTML = "";
+          for (var j = 0; j < slides.length; j++) {
+            (function (j) {
+              var b = document.createElement("button");
+              b.type = "button";
+              b.setAttribute("aria-label", "Ver captura " + (j + 1) + " de " + slides.length);
+              if (j === 0) b.setAttribute("aria-current", "true");
+              b.addEventListener("click", function () {
+                go(j);
+                resetAutoplay();
+              });
+              dotsWrap.appendChild(b);
+            })(j);
+          }
+        }
+
+        function resetAutoplay() {
+          if (!autoplayMs || slides.length <= 1) return;
+          clearInterval(timer);
+          timer = setInterval(function () {
+            go(idx + 1);
+          }, autoplayMs);
+        }
+
+        buildDots();
+        layout();
+        if (captionEl) captionEl.textContent = captionAt(0) || captionEl.textContent;
+        setDots();
+
+        if (prevBtn) prevBtn.addEventListener("click", function () {
+          go(idx - 1);
+          resetAutoplay();
+        });
+        if (nextBtn) nextBtn.addEventListener("click", function () {
+          go(idx + 1);
+          resetAutoplay();
+        });
+
+        var ro = typeof ResizeObserver !== "undefined"
+          ? new ResizeObserver(function () {
+              layout();
+            })
+          : null;
+        if (ro) ro.observe(viewport);
+        window.addEventListener("resize", layout);
+
+        resetAutoplay();
+        root.addEventListener("mouseenter", function () {
+          clearInterval(timer);
+        });
+        root.addEventListener("mouseleave", resetAutoplay);
+      }
+
+      document.querySelectorAll("[data-slider]").forEach(initSlider);
+    })();
+  </script>
+</body>
+</html>
