@@ -737,6 +737,28 @@
       gap: 1rem;
       box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
     }
+    .features--compact .feature-row:nth-child(odd) {
+      background: var(--bg);
+    }
+    .features--compact .feature-row:nth-child(even) {
+      background: var(--bg-soft);
+    }
+    .features--compact .feature-row.feature-row--agent:nth-child(odd) {
+      background: linear-gradient(135deg, var(--agent-soft) 0%, var(--bg) 58%);
+    }
+    .features--compact .feature-row.feature-row--agent:nth-child(even) {
+      background: linear-gradient(135deg, #f5f3ff 0%, var(--bg-soft) 58%);
+    }
+    .features--compact .feature-row.feature-row--agent {
+      border-color: #ddd6fe;
+      box-shadow: 0 2px 16px rgba(124, 58, 237, 0.07);
+    }
+    .features--compact .feature-row.feature-row--agent .feature-copy .sub {
+      color: var(--agent);
+    }
+    .features--compact .feature-row--agent .feature-slider-wrap .device-slider-dots button[aria-current="true"] {
+      background: var(--agent);
+    }
     @media (min-width: 800px) {
       .features--compact .feature-row {
         grid-template-columns: minmax(148px, 30%) 1fr;
@@ -1252,13 +1274,13 @@
             <img src="app/images/material-marketing/10.png" alt="Panel de estadísticas con KPIs y ranking de productos" width="600" height="1200" decoding="async" loading="lazy" />
           </div>
         </article>
-        <article class="feature-row reverse" id="atencion-agente">
+        <article class="feature-row reverse feature-row--agent" id="atencion-agente">
           <div class="feature-copy">
             <span class="feature-plan-badge">Solo OBIT + Agente</span>
-            <p class="sub">Atención omnicanal</p>
-            <h3>Conversaciones y seguimientos en la misma mesa de trabajo</h3>
+            <p class="sub">OBIT + Agente · Atención omnicanal</p>
+            <h3>Un solo lugar para conversaciones y próximos pasos</h3>
             <p>
-              Centralizá <strong>contactos, conversaciones y seguimientos</strong> para que nada quede en chats sueltos: prioridades claras, historial por cliente y equipo alineado. Este bloque <strong>no está en el plan Básico</strong>; forma parte de <strong>OBIT + Agente</strong>.
+              Atendé por los canales que ya usás y registrá cada interacción: conversaciones con estado, seguimientos con historial y prioridades claras para el equipo. <strong>No está en el plan Básico</strong>; incluido en <strong>OBIT + Agente</strong>.
             </p>
           </div>
           <div class="feature-visual agent">
@@ -1280,13 +1302,13 @@
             </div>
           </div>
         </article>
-        <article class="feature-row">
+        <article class="feature-row feature-row--agent" id="marketing-agente">
           <div class="feature-copy">
             <span class="feature-plan-badge">Solo OBIT + Agente</span>
-            <p class="sub">Marketing y sitio avanzado</p>
-            <h3>Campañas y métricas del canal digital</h3>
+            <p class="sub">OBIT + Agente · Campañas y analítica web</p>
+            <h3>Publicidad y sitio conectados a tus ventas</h3>
             <p>
-              Lanzá <strong>campañas</strong> con seguimiento de contactos y resultados, y profundizá en las <strong>métricas del sitio</strong> (visitas, WhatsApp, conversión). Complementa tu catálogo y estadísticas base con herramientas de crecimiento en el plan <strong>OBIT + Agente</strong>.
+              Medí campañas y el recorrido desde el aviso hasta el contacto, y sumá <strong>métricas del sitio</strong> (visitas, WhatsApp, conversión) sobre la misma base que tu <strong>catálogo</strong> y tus <strong>estadísticas</strong> del plan Básico. Disponible en <strong>OBIT + Agente</strong>.
             </p>
           </div>
           <div class="feature-visual agent">
