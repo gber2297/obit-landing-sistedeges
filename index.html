@@ -18,6 +18,9 @@
       --agent: #7c3aed;
       --agent-soft: #f5f3ff;
       --border: #e2e8f0;
+      /* CTA naranja (alineado a Tailwind orange-500/600 — /registro) */
+      --cta-orange: #f97316;
+      --cta-orange-hover: #ea580c;
       --shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
       --radius: 14px;
       --nav-h: 64px;
@@ -158,6 +161,38 @@
     }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
     .btn-lg { padding: 0.75rem 1.5rem; font-size: 1rem; }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      width: 100%;
+      padding: 0.78rem 1.1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1.25;
+      color: #fff !important;
+      background: var(--cta-orange);
+      border: none;
+      box-shadow: 0 10px 28px rgba(249, 115, 22, 0.38);
+      text-decoration: none;
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+    }
+    .btn-wa:hover {
+      background: var(--cta-orange-hover);
+      color: #fff !important;
+      box-shadow: 0 12px 32px rgba(249, 115, 22, 0.48);
+      text-decoration: none;
+    }
+    .plan-card .btn-wa {
+      margin-top: 0.2rem;
+    }
+    .enterprise-band .btn-wa.btn-lg {
+      width: auto;
+      min-width: min(100%, 20rem);
+    }
 
     /* Marcas de agua del logo (sutiles, distinta posición por sección) */
     .wm-bg {
@@ -1170,16 +1205,6 @@
       gap: 0.75rem;
       align-items: center;
     }
-    .enterprise-band .enterprise-btn-solid {
-      background: linear-gradient(135deg, #eef2ff 0%, #ffffff 100%);
-      color: #0f172a !important;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
-    }
-    .enterprise-band .enterprise-btn-solid:hover {
-      filter: brightness(1.03);
-      text-decoration: none;
-    }
     .enterprise-band .enterprise-btn-outline {
       border-color: rgba(226, 232, 240, 0.4);
       color: #e2e8f0 !important;
@@ -1541,7 +1566,7 @@
             <li class="no"><strong>Sitio web</strong> con métricas y herramientas avanzadas (según implementación)</li>
             <li class="no"><strong>Configuración del asistente (agente)</strong> y <strong>auditoría</strong></li>
           </ul>
-          <a class="btn btn-primary" href="#contacto">Elegir Básico</a>
+          <a class="btn-wa" href="https://wa.me/34613441291?text=Hola%2C%20equipo%20OBIT.%20Me%20interesa%20el%20plan%20B%C3%A1sico%20(ventas%2C%20cat%C3%A1logo%20web%20y%20estad%C3%ADsticas).%20%C2%BFPodemos%20coordinar%20una%20demo%20o%20una%20cotizaci%C3%B3n%20seg%C3%BAn%20mi%20operaci%C3%B3n%3F%20Gracias." target="_blank" rel="noopener noreferrer">Consultar por WhatsApp<span aria-hidden="true"> →</span></a>
         </article>
 
         <article class="plan-card featured">
@@ -1587,7 +1612,7 @@
             <li><strong>Sitio web</strong> con métricas y herramientas avanzadas (según implementación)</li>
             <li><strong>Configuración del asistente (agente)</strong> y <strong>auditoría</strong></li>
           </ul>
-          <a class="btn btn-primary" href="#contacto" style="background:linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%);box-shadow:0 4px 14px rgba(124,58,237,0.35);">Elegir OBIT + Agente</a>
+          <a class="btn-wa" href="https://wa.me/34613441291?text=Hola%2C%20equipo%20OBIT.%20Quiero%20informaci%C3%B3n%20del%20plan%20OBIT%20%2B%20Agente%20(atenci%C3%B3n%20omnicanal%2C%20campa%C3%B1as%20y%20agente).%20%C2%BFPodemos%20conversar%20para%20evaluar%20encaje%20y%20pr%C3%B3ximos%20pasos%3F%20Gracias." target="_blank" rel="noopener noreferrer">Consultar por WhatsApp<span aria-hidden="true"> →</span></a>
         </article>
       </div>
       <p class="planes-enterprise-teaser" style="text-align:center;color:var(--muted);font-size:0.95rem;max-width:640px;margin-left:auto;margin-right:auto;">
@@ -1624,7 +1649,7 @@
         </li>
       </ul>
       <div class="enterprise-actions">
-        <a class="btn btn-primary btn-lg enterprise-btn-solid" href="#contacto">Agendar conversación Enterprise</a>
+        <a class="btn btn-lg btn-wa" href="https://wa.me/34613441291?text=Hola%2C%20equipo%20OBIT.%20Necesito%20explorar%20OBIT%20Enterprise%20(integraciones%2C%20volumen%20o%20alcance%20a%20medida).%20%C2%BFPodemos%20agendar%20una%20conversaci%C3%B3n%20con%20el%20equipo%20comercial%20o%20t%C3%A9cnico%3F%20Gracias." target="_blank" rel="noopener noreferrer">Hablar por WhatsApp — Enterprise<span aria-hidden="true"> →</span></a>
         <a class="btn btn-ghost btn-lg enterprise-btn-outline" href="mailto:ventas@example.com?subject=Consulta%20OBIT%20Enterprise">Solicitar propuesta por correo</a>
       </div>
     </div>
