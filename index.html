@@ -1225,6 +1225,58 @@
       border-bottom-color: var(--accent-dark);
     }
 
+    /* Partners — carrusel continuo (sin flechas ni dots) */
+    .partners-strip {
+      padding: 3rem 0 3.25rem;
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .partners-marquee {
+      position: relative;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+    }
+    .partners-track {
+      display: flex;
+      align-items: center;
+      gap: clamp(3.5rem, 9vw, 7rem);
+      width: max-content;
+      animation: partners-marquee 42s linear infinite;
+    }
+    .partners-track:hover {
+      animation-play-state: paused;
+    }
+    .partners-track img {
+      height: clamp(68px, 13vw, 132px);
+      width: auto;
+      max-width: min(380px, 58vw);
+      object-fit: contain;
+      opacity: 0.52;
+      filter: grayscale(100%);
+      transition: opacity 0.35s ease, filter 0.35s ease;
+    }
+    .partners-track img:hover {
+      opacity: 0.92;
+      filter: grayscale(35%);
+    }
+    @keyframes partners-marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .partners-track {
+        animation: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 56rem;
+        margin: 0 auto;
+        row-gap: 1.5rem;
+      }
+    }
+
     /* CTA band */
     .cta-band {
       background: linear-gradient(135deg, #1e40af 0%, #5b21b6 100%);
@@ -1674,6 +1726,25 @@
           “Con campañas y estadísticas entendimos qué promoción traía consultas que realmente compraban.”
           <strong>— Valentina Ríos · Servicios B2B</strong>
         </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="partners-strip" aria-label="Partners tecnológicos">
+    <div class="partners-marquee">
+      <div class="partners-track">
+        <img src="app/images/partners/1.png" alt="" width="400" height="130" decoding="async" loading="lazy" />
+        <img src="app/images/partners/2.png" alt="" width="400" height="130" decoding="async" loading="lazy" />
+        <img src="app/images/partners/3.png" alt="" width="400" height="130" decoding="async" loading="lazy" />
+        <img src="app/images/partners/4.png" alt="" width="400" height="130" decoding="async" loading="lazy" />
+        <img src="app/images/partners/5.png" alt="" width="400" height="130" decoding="async" loading="lazy" />
+        <img src="app/images/partners/6.png" alt="" width="400" height="130" decoding="async" loading="lazy" />
+        <img src="app/images/partners/1.png" alt="" width="400" height="130" decoding="async" loading="lazy" aria-hidden="true" />
+        <img src="app/images/partners/2.png" alt="" width="400" height="130" decoding="async" loading="lazy" aria-hidden="true" />
+        <img src="app/images/partners/3.png" alt="" width="400" height="130" decoding="async" loading="lazy" aria-hidden="true" />
+        <img src="app/images/partners/4.png" alt="" width="400" height="130" decoding="async" loading="lazy" aria-hidden="true" />
+        <img src="app/images/partners/5.png" alt="" width="400" height="130" decoding="async" loading="lazy" aria-hidden="true" />
+        <img src="app/images/partners/6.png" alt="" width="400" height="130" decoding="async" loading="lazy" aria-hidden="true" />
       </div>
     </div>
   </section>
