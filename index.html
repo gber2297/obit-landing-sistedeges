@@ -34,6 +34,7 @@
       --wm-opacity-social: 0.1;
       --wm-opacity-faq: 0.075;
       --wm-opacity-cta: 0.18;
+      --wm-opacity-enterprise: 0.06;
       /* Logo navbar */
       --logo-opacity: 0.92;
       --logo-opacity-hover: 1;
@@ -253,6 +254,18 @@
       transform: rotate(-9deg);
       opacity: var(--wm-opacity-faq);
     }
+    /* Enterprise: superior derecha */
+    .enterprise-band.wm-bg::before {
+      width: min(200px, 42vw);
+      height: min(200px, 42vw);
+      top: 12%;
+      right: -4%;
+      background-position: 100% 0;
+      background-size: contain;
+      transform: rotate(11deg);
+      opacity: var(--wm-opacity-enterprise);
+    }
+
     /* CTA final: centrado, legible sobre degradado violeta */
     .cta-band.wm-bg::before {
       width: min(360px, 85vw);
@@ -1067,6 +1080,126 @@
       font-size: 0.95rem;
     }
 
+    /* Enterprise (planes a medida) */
+    .enterprise-band {
+      position: relative;
+      overflow: hidden;
+      padding: 3.15rem 1.25rem 3.25rem;
+      background: linear-gradient(165deg, #070c18 0%, #121b2e 38%, #0b1222 100%);
+      color: #e2e8f0;
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+    .enterprise-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .enterprise-title-stack {
+      margin: 0 0 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .enterprise-brand-name {
+      display: block;
+      margin: 0;
+      font-size: clamp(2.15rem, 6.5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 1.02;
+      color: #ffffff;
+      text-shadow:
+        0 0 42px rgba(99, 102, 241, 0.55),
+        0 4px 28px rgba(15, 23, 42, 0.65);
+    }
+    .enterprise-brand-sub {
+      display: block;
+      margin: 0;
+      font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.3;
+      color: #cbd5e1;
+      max-width: 38rem;
+    }
+    .enterprise-lead {
+      margin: 0 0 1.85rem;
+      max-width: 40rem;
+      color: #94a3b8;
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+    .enterprise-pillars {
+      list-style: none;
+      margin: 0 0 2rem;
+      padding: 0;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .enterprise-pillars { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 960px) {
+      .enterprise-pillars { grid-template-columns: repeat(4, 1fr); }
+    }
+    .enterprise-pillars li {
+      padding: 1.15rem 1.05rem;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(6px);
+    }
+    .enterprise-pillars strong {
+      display: block;
+      color: #f8fafc;
+      font-size: 0.98rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .enterprise-pillars li span {
+      display: block;
+      font-size: 0.855rem;
+      color: #94a3b8;
+      line-height: 1.45;
+    }
+    .enterprise-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .enterprise-band .enterprise-btn-solid {
+      background: linear-gradient(135deg, #eef2ff 0%, #ffffff 100%);
+      color: #0f172a !important;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    }
+    .enterprise-band .enterprise-btn-solid:hover {
+      filter: brightness(1.03);
+      text-decoration: none;
+    }
+    .enterprise-band .enterprise-btn-outline {
+      border-color: rgba(226, 232, 240, 0.4);
+      color: #e2e8f0 !important;
+      background: rgba(15, 23, 42, 0.35);
+    }
+    .enterprise-band .enterprise-btn-outline:hover {
+      border-color: #a5b4fc;
+      color: #fff !important;
+    }
+    .planes-enterprise-teaser { margin-top: 2rem !important; }
+    .planes-enterprise-teaser a {
+      color: var(--accent-dark);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(37, 99, 235, 0.35);
+    }
+    .planes-enterprise-teaser a:hover {
+      border-bottom-color: var(--accent-dark);
+    }
+
     /* CTA band */
     .cta-band {
       background: linear-gradient(135deg, #1e40af 0%, #5b21b6 100%);
@@ -1117,6 +1250,7 @@
         <a href="#funcionalidades">Funcionalidades</a>
         <a href="#negocios">Tipos de negocio</a>
         <a href="#planes">Planes</a>
+        <a href="#enterprise">Enterprise</a>
         <a href="#faq">Preguntas frecuentes</a>
       </div>
       <div class="nav-cta">
@@ -1456,9 +1590,43 @@
           <a class="btn btn-primary" href="#contacto" style="background:linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%);box-shadow:0 4px 14px rgba(124,58,237,0.35);">Elegir OBIT + Agente</a>
         </article>
       </div>
-      <p style="text-align:center;color:var(--muted);margin-top:2rem;font-size:0.95rem;max-width:640px;margin-left:auto;margin-right:auto;">
-        ¿Necesitás integraciones, volumen alto o condiciones contractuales especiales? Ofrecemos <strong>planes a medida</strong> sobre la misma base de producto — consultanos.
+      <p class="planes-enterprise-teaser" style="text-align:center;color:var(--muted);font-size:0.95rem;max-width:640px;margin-left:auto;margin-right:auto;">
+        ¿Integraciones, alto volumen o condiciones contractuales? Conocé <a href="#enterprise">OBIT Enterprise</a> — propuesta a medida sobre la misma base de producto.
       </p>
+    </div>
+  </section>
+
+  <section class="enterprise-band wm-bg" id="enterprise" aria-labelledby="enterprise-heading">
+    <div class="enterprise-inner">
+      <h2 class="enterprise-title-stack" id="enterprise-heading">
+        <span class="enterprise-brand-name">OBIT Enterprise</span>
+        <span class="enterprise-brand-sub">Operación y datos a la medida de tu organización</span>
+      </h2>
+      <p class="enterprise-lead">
+        Para grupos, multi-sede o cargas de integración que van más allá del estándar: mismo núcleo OBIT con <strong>equipo de proyecto</strong>, entregables acordados y <strong>marco comercial</strong> alineado a tu escala.
+      </p>
+      <ul class="enterprise-pillars" role="list">
+        <li>
+          <strong>IA empresarial aplicada</strong>
+          <span>Agentes, automatización y orquestación acoplados a tus procesos: menos fricción entre personas y sistemas.</span>
+        </li>
+        <li>
+          <strong>Módulos dedicados</strong>
+          <span>Desarrollos a medida, integraciones API/ERP y entornos con SLA según la criticidad de tu negocio.</span>
+        </li>
+        <li>
+          <strong>Data &amp; analytics</strong>
+          <span>Tableros ejecutivos, reporting avanzado y lineamiento de datos sobre tu operación comercial.</span>
+        </li>
+        <li>
+          <strong>Condiciones por volumen</strong>
+          <span>Licencias, multi-sede, descuentos por volumen y contratos marco para escalar con previsibilidad.</span>
+        </li>
+      </ul>
+      <div class="enterprise-actions">
+        <a class="btn btn-primary btn-lg enterprise-btn-solid" href="#contacto">Agendar conversación Enterprise</a>
+        <a class="btn btn-ghost btn-lg enterprise-btn-outline" href="mailto:ventas@example.com?subject=Consulta%20OBIT%20Enterprise">Solicitar propuesta por correo</a>
+      </div>
     </div>
   </section>
 
@@ -1533,6 +1701,7 @@
     <p><strong>OBIT Software</strong> · Plataforma de gestión comercial y relación con el cliente.</p>
     <div class="foot-links">
       <a href="#planes">Planes</a>
+      <a href="#enterprise">Enterprise</a>
       <a href="#faq">Ayuda</a>
       <span>Términos y privacidad (pendiente)</span>
     </div>
